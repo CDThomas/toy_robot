@@ -16,10 +16,6 @@ defmodule ToyRobotTest do
       robot = %ToyRobot{x: 1, y: 1, direction: :east}
       assert ToyRobot.report(robot) == robot
     end
-
-    test "passes through nil given nil" do
-      assert ToyRobot.report(nil) == nil
-    end
   end
 
   describe "move/1" do

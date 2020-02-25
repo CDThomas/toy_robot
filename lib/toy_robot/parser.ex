@@ -20,6 +20,10 @@ defmodule ToyRobot.Parser do
     {:ok, :report}
   end
 
+  defp do_parse(["MOVE"]) do
+    {:ok, :move}
+  end
+
   defp do_parse(_) do
     {:error, :invalid_command}
   end

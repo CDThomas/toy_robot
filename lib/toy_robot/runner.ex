@@ -8,7 +8,15 @@ defmodule ToyRobot.Runner do
     ToyRobot.place(x, y, direction)
   end
 
+  def run(_, nil) do
+    nil
+  end
+
   def run(:report, state) do
     ToyRobot.report(state)
+  end
+
+  def run(:move, state) do
+    ToyRobot.move(state)
   end
 end

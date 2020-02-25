@@ -29,7 +29,6 @@ defmodule ToyRobot do
   """
   @spec report(robot :: ToyRobot.t() | nil) :: ToyRobot.t() | nil
   def report(%ToyRobot{} = robot), do: robot
-  def report(nil), do: nil
 
   def move(%ToyRobot{direction: :north, y: y} = robot) when y < @table_size do
     %{robot | y: y + 1}

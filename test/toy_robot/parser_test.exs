@@ -76,4 +76,11 @@ defmodule ToyRobot.ParserTest do
       assert {:ok, :report} == Parser.parse(command)
     end
   end
+
+  describe "parsing the MOVE command" do
+    test "returns the correct command" do
+      command = "MOVE"
+      assert {:ok, :move} == Parser.parse(command)
+    end
+  end
 end
