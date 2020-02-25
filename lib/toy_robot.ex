@@ -61,6 +61,10 @@ defmodule ToyRobot do
     robot
   end
 
+  @doc """
+  Rotates the robot 90 degrees to the right. Does not change the position of the robot.
+  """
+  @spec right(robot :: ToyRobot.t()) :: ToyRobot.t()
   def right(%ToyRobot{direction: :north} = robot) do
     %{robot | direction: :east}
   end
@@ -77,6 +81,10 @@ defmodule ToyRobot do
     %{robot | direction: :north}
   end
 
+  @doc """
+  Rotates the robot 90 degrees to the left. Does not change the position of the robot.
+  """
+  @spec left(robot :: ToyRobot.t()) :: ToyRobot.t()
   def left(%ToyRobot{direction: :north} = robot) do
     %{robot | direction: :west}
   end
