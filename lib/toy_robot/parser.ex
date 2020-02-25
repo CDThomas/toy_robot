@@ -24,6 +24,14 @@ defmodule ToyRobot.Parser do
     {:ok, :move}
   end
 
+  defp do_parse(["RIGHT"]) do
+    {:ok, :right}
+  end
+
+  defp do_parse(["LEFT"]) do
+    {:ok, :left}
+  end
+
   defp do_parse(_) do
     {:error, :invalid_command}
   end

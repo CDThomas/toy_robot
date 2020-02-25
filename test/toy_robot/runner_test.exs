@@ -23,4 +23,18 @@ defmodule ToyRobot.RunnerTest do
 
     assert Runner.run(:move, initial_state) == expected_state
   end
+
+  test "runs right commands" do
+    initial_state = %ToyRobot{x: 0, y: 0, direction: :north}
+    expected_state = %ToyRobot{x: 0, y: 0, direction: :east}
+
+    assert Runner.run(:right, initial_state) == expected_state
+  end
+
+  test "runs left commands" do
+    initial_state = %ToyRobot{x: 0, y: 0, direction: :north}
+    expected_state = %ToyRobot{x: 0, y: 0, direction: :west}
+
+    assert Runner.run(:left, initial_state) == expected_state
+  end
 end

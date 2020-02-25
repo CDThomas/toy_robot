@@ -19,4 +19,12 @@ defmodule ToyRobot.Runner do
   def run(:move, state) do
     ToyRobot.move(state)
   end
+
+  def run(:right, state) do
+    ToyRobot.right(state)
+  end
+
+  def run(:left, state) do
+    ToyRobot.left(state)
+  end
 end
