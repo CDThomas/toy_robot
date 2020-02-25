@@ -16,6 +16,10 @@ defmodule ToyRobot.Parser do
     end
   end
 
+  defp do_parse(["REPORT"]) do
+    {:ok, :report}
+  end
+
   defp do_parse(_) do
     {:error, :invalid_command}
   end

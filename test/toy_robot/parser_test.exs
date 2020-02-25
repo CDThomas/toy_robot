@@ -69,4 +69,11 @@ defmodule ToyRobot.ParserTest do
       assert Parser.parse(command) == {:error, :invalid_args}
     end
   end
+
+  describe "parsing the REPORT command" do
+    test "returns the correct command" do
+      command = "REPORT"
+      assert {:ok, :report} == Parser.parse(command)
+    end
+  end
 end

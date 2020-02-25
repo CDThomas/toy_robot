@@ -18,18 +18,26 @@ defmodule Mix.Tasks.Repl do
         state =
           case Parser.parse(line) do
             {:ok, command} ->
-              command
-              |> Runner.run()
-              |> format()
-              |> IO.puts()
+              Runner.run(command, state)
 
             {:error, error} ->
               IO.inspect(error, label: "Error")
               state
           end
 
+        maybe_print(state)
         read(state)
     end
+  end
+
+  defp maybe_print(%ToyRobot{} = state) do
+    state
+    |> format()
+    |> IO.puts()
+  end
+
+  defp maybe_print(nil) do
+    :noop
   end
 
   defp format(%ToyRobot{x: x, y: y, direction: direction}) do
