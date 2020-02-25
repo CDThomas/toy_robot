@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Repl do
     read()
   end
 
-  def read(_state \\ %ToyRobot{}) do
+  def read(state \\ nil) do
     case IO.read(:stdio, :line) do
       :eof ->
         :ok
@@ -16,10 +16,13 @@ defmodule Mix.Tasks.Repl do
 
       line ->
         state =
-          with {:ok, command} <- Parser.parse(line) do
-            Runner.run(command) |> IO.inspect()
-          else
-            {:error, error} -> IO.inspect(error, label: "Error")
+          case Parser.parse(line) do
+            {:ok, command} ->
+              Runner.run(command) |> IO.inspect()
+
+            {:error, error} ->
+              IO.inspect(error, label: "Error")
+              state
           end
 
         read(state)
