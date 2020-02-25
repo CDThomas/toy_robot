@@ -75,4 +75,64 @@ defmodule ToyRobotTest do
       assert ToyRobot.move(initial_robot) == expected_robot
     end
   end
+
+  describe "right/1" do
+    test "changes direction to east when facing north" do
+      initial_robot = %ToyRobot{x: 0, y: 0, direction: :north}
+      expected_robot = %ToyRobot{x: 0, y: 0, direction: :east}
+
+      assert ToyRobot.right(initial_robot) == expected_robot
+    end
+
+    test "changes direction to south when facing east" do
+      initial_robot = %ToyRobot{x: 0, y: 0, direction: :east}
+      expected_robot = %ToyRobot{x: 0, y: 0, direction: :south}
+
+      assert ToyRobot.right(initial_robot) == expected_robot
+    end
+
+    test "changes direction to west when facing south" do
+      initial_robot = %ToyRobot{x: 0, y: 0, direction: :south}
+      expected_robot = %ToyRobot{x: 0, y: 0, direction: :west}
+
+      assert ToyRobot.right(initial_robot) == expected_robot
+    end
+
+    test "changes direction to north when facing west" do
+      initial_robot = %ToyRobot{x: 0, y: 0, direction: :west}
+      expected_robot = %ToyRobot{x: 0, y: 0, direction: :north}
+
+      assert ToyRobot.right(initial_robot) == expected_robot
+    end
+  end
+
+  describe "left/1" do
+    test "changes direction to west when facing north" do
+      initial_robot = %ToyRobot{x: 0, y: 0, direction: :north}
+      expected_robot = %ToyRobot{x: 0, y: 0, direction: :west}
+
+      assert ToyRobot.left(initial_robot) == expected_robot
+    end
+
+    test "changes direction to south when facing west" do
+      initial_robot = %ToyRobot{x: 0, y: 0, direction: :west}
+      expected_robot = %ToyRobot{x: 0, y: 0, direction: :south}
+
+      assert ToyRobot.left(initial_robot) == expected_robot
+    end
+
+    test "changes direction to east when facing south" do
+      initial_robot = %ToyRobot{x: 0, y: 0, direction: :south}
+      expected_robot = %ToyRobot{x: 0, y: 0, direction: :east}
+
+      assert ToyRobot.left(initial_robot) == expected_robot
+    end
+
+    test "changes direction to north when facing east" do
+      initial_robot = %ToyRobot{x: 0, y: 0, direction: :east}
+      expected_robot = %ToyRobot{x: 0, y: 0, direction: :north}
+
+      assert ToyRobot.left(initial_robot) == expected_robot
+    end
+  end
 end

@@ -60,4 +60,36 @@ defmodule ToyRobot do
   def move(%ToyRobot{} = robot) do
     robot
   end
+
+  def right(%ToyRobot{direction: :north} = robot) do
+    %{robot | direction: :east}
+  end
+
+  def right(%ToyRobot{direction: :east} = robot) do
+    %{robot | direction: :south}
+  end
+
+  def right(%ToyRobot{direction: :south} = robot) do
+    %{robot | direction: :west}
+  end
+
+  def right(%ToyRobot{direction: :west} = robot) do
+    %{robot | direction: :north}
+  end
+
+  def left(%ToyRobot{direction: :north} = robot) do
+    %{robot | direction: :west}
+  end
+
+  def left(%ToyRobot{direction: :west} = robot) do
+    %{robot | direction: :south}
+  end
+
+  def left(%ToyRobot{direction: :south} = robot) do
+    %{robot | direction: :east}
+  end
+
+  def left(%ToyRobot{direction: :east} = robot) do
+    %{robot | direction: :north}
+  end
 end
