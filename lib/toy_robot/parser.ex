@@ -1,5 +1,8 @@
 defmodule ToyRobot.Parser do
-  @spec parse(command :: binary()) :: {:ok, mfa()} | {:error, atom()}
+  @type parser_error ::
+          {:error, :invalid_args | :invalid_command | :invalid_coordinate | :invalid_direction}
+
+  @spec parse(command :: binary()) :: {:ok, ToyRobot.Runner.command()} | parser_error()
   def parse(command) do
     command
     |> String.trim()
@@ -9,7 +12,7 @@ defmodule ToyRobot.Parser do
 
   defp do_parse(["PLACE" | args]) do
     with {:ok, [x, y, direction]} <- parse_args(args) do
-      {:ok, {ToyRobot, :place, [x, y, direction]}}
+      {:ok, {:place, x, y, direction}}
     end
   end
 

@@ -6,11 +6,12 @@ defmodule ToyRobot do
   defstruct [:x, :y, :direction]
 
   @type t :: %__MODULE__{
-          x: 0..4 | nil,
-          y: 0..4 | nil,
+          x: coordinate() | nil,
+          y: coordinate() | nil,
           direction: direction() | nil
         }
 
+  @type coordinate :: 0..4
   @type direction :: :north | :east | :south | :west
 
   @doc """

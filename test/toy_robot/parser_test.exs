@@ -4,44 +4,49 @@ defmodule ToyRobot.ParserTest do
   alias ToyRobot.Parser
 
   describe "parsing the PLACE command" do
-    test "returns the correct MFA given the direction SOUTH" do
+    test "returns the correct command name" do
       command = "PLACE 0,0,SOUTH"
-      assert Parser.parse(command) == {:ok, {ToyRobot, :place, [0, 0, :south]}}
+      assert {:ok, {:place, _, _, _}} = Parser.parse(command)
     end
 
-    test "returns the correct MFA given the direction NORTH" do
+    test "returns the correct direction given SOUTH" do
+      command = "PLACE 0,0,SOUTH"
+      assert {:ok, {_, _, _, :south}} = Parser.parse(command)
+    end
+
+    test "returns the correct direction given NORTH" do
       command = "PLACE 0,0,NORTH"
-      assert Parser.parse(command) == {:ok, {ToyRobot, :place, [0, 0, :north]}}
+      assert {:ok, {_, _, _, :north}} = Parser.parse(command)
     end
 
-    test "returns the correct MFA given the direction EAST" do
+    test "returns the correct direction given EAST" do
       command = "PLACE 0,0,EAST"
-      assert Parser.parse(command) == {:ok, {ToyRobot, :place, [0, 0, :east]}}
+      assert {:ok, {_, _, _, :east}} = Parser.parse(command)
     end
 
-    test "returns the correct MFA given the direction WEST" do
+    test "returns the correct direction given WEST" do
       command = "PLACE 0,0,WEST"
-      assert Parser.parse(command) == {:ok, {ToyRobot, :place, [0, 0, :west]}}
+      assert {:ok, {_, _, _, :west}} = Parser.parse(command)
     end
 
-    test "returns the correct MFA when X is 0" do
+    test "returns the correct value for X given 0" do
       command = "PLACE 0,0,SOUTH"
-      assert Parser.parse(command) == {:ok, {ToyRobot, :place, [0, 0, :south]}}
+      assert {:ok, {_, 0, _, _}} = Parser.parse(command)
     end
 
-    test "returns the correct MFA when X is greater than 0" do
+    test "returns the correct value for X given a positive integer" do
       command = "PLACE 8,0,SOUTH"
-      assert Parser.parse(command) == {:ok, {ToyRobot, :place, [8, 0, :south]}}
+      assert {:ok, {_, 8, _, _}} = Parser.parse(command)
     end
 
-    test "returns the correct MFA when Y is 0" do
+    test "returns the correct value for Y given 0" do
       command = "PLACE 0,0,SOUTH"
-      assert Parser.parse(command) == {:ok, {ToyRobot, :place, [0, 0, :south]}}
+      assert {:ok, {_, _, 0, _}} = Parser.parse(command)
     end
 
-    test "returns the correct MFA when Y is greater than 0" do
+    test "returns the correct value for Y given a positive integer" do
       command = "PLACE 0,6,SOUTH"
-      assert Parser.parse(command) == {:ok, {ToyRobot, :place, [0, 6, :south]}}
+      assert {:ok, {_, _, 6, _}} = Parser.parse(command)
     end
 
     test "returns an error given an invalid direction" do
