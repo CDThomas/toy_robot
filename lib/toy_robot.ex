@@ -21,4 +21,11 @@ defmodule ToyRobot do
   def place(x \\ 0, y \\ 0, direction \\ :north) do
     %__MODULE__{x: x, y: y, direction: direction}
   end
+
+  @doc """
+  Passes through the given robot. Returns nil when given nil.
+  """
+  @spec report(robot :: ToyRobot.t() | nil) :: ToyRobot.t() | nil
+  def report(%ToyRobot{} = robot), do: robot
+  def report(nil), do: nil
 end
