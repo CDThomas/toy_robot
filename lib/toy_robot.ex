@@ -1,6 +1,11 @@
 defmodule ToyRobot do
   @moduledoc """
-  ToyRobot.
+  Functions for simulating a toy robot moving on a square tabletop.
+
+  The table top has dimensions of 5 units x 5 units. There are no other obstructions on the table surface.
+
+  Any movement that would result in the robot falling from the table is prevented, however further valid movement
+  commands are still allowed.
   """
 
   defstruct [:x, :y, :direction]
@@ -27,9 +32,15 @@ defmodule ToyRobot do
   @doc """
   Passes through the given robot. Returns nil when given nil.
   """
-  @spec report(robot :: ToyRobot.t() | nil) :: ToyRobot.t() | nil
+  @spec report(robot :: ToyRobot.t()) :: ToyRobot.t()
   def report(%ToyRobot{} = robot), do: robot
 
+  @doc """
+  Moves the toy robot one unit forward in the direction it is currently facing.
+
+  Ignore the command if movement would cause the robot to fall off the table.
+  """
+  @spec move(robot :: ToyRobot.t()) :: ToyRobot.t()
   def move(%ToyRobot{direction: :north, y: y} = robot) when y < @table_size do
     %{robot | y: y + 1}
   end
