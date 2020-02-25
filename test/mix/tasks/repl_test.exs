@@ -12,14 +12,14 @@ defmodule Mix.Tasks.ReplTest do
   end
 
   test "Ignores commands until the robot is placed" do
-    assert capture_io("REPORT\n", fn ->
+    assert capture_io("REPORT\nMOVE\n", fn ->
              Repl.run([])
            end) == ""
   end
 
   test "Handles multiple commands" do
-    assert capture_io("PLACE 0,0,SOUTH\nREPORT\n", fn ->
+    assert capture_io("PLACE 0,0,NORTH\nREPORT\nMOVE\n", fn ->
              Repl.run([])
-           end) == "(0, 0, SOUTH)\n(0, 0, SOUTH)\n"
+           end) == "(0, 0, NORTH)\n(0, 0, NORTH)\n(0, 1, NORTH)\n"
   end
 end
