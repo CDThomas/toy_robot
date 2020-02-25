@@ -2,6 +2,20 @@ defmodule ToyRobot.Parser do
   @type parser_error ::
           {:error, :invalid_args | :invalid_command | :invalid_coordinate | :invalid_direction}
 
+  @doc """
+  parses command strings into commands for the ToyRobot.Runner to run.
+
+  Valid commands are:
+  "PLACE X,Y,F"
+  "MOVE"
+  "LEFT"
+  "RIGHT"
+  "REPORT"
+
+  Leading and trailing whitespace is trimmed.
+
+  For the PLACE command, spaces and commas (",") between args are ignored.
+  """
   @spec parse(command :: binary()) :: {:ok, ToyRobot.Runner.command()} | parser_error()
   def parse(command) do
     command
