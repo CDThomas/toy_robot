@@ -12,14 +12,39 @@ defmodule Mix.Tasks.ReplTest do
   end
 
   test "Ignores commands until the robot is placed" do
-    assert capture_io("REPORT\nMOVE\n", fn ->
+    commands = """
+    REPORT
+    MOVE
+    RIGHT
+    LEFT
+    """
+
+    assert capture_io(commands, fn ->
              Repl.run([])
            end) == ""
   end
 
   test "Handles multiple commands" do
-    assert capture_io("PLACE 0,0,NORTH\nREPORT\nMOVE\n", fn ->
+    commands = """
+    PLACE 0,0,NORTH
+    REPORT
+    MOVE
+    RIGHT
+    LEFT
+    """
+
+    expected =
+      [
+        "(0, 0, NORTH)",
+        "(0, 0, NORTH)",
+        "(0, 1, NORTH)",
+        "(0, 1, EAST)",
+        "(0, 1, NORTH)"
+      ]
+      |> Enum.join("\n")
+
+    assert capture_io(commands, fn ->
              Repl.run([])
-           end) == "(0, 0, NORTH)\n(0, 0, NORTH)\n(0, 1, NORTH)\n"
+           end) == expected <> "\n"
   end
 end
