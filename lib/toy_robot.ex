@@ -14,6 +14,8 @@ defmodule ToyRobot do
   @type coordinate :: 0..4
   @type direction :: :north | :east | :south | :west
 
+  @table_size 4
+
   @doc """
   Places the toy robot on the table in position x, y and with the direction :north, :south, :east, or :west.
   """
@@ -28,4 +30,24 @@ defmodule ToyRobot do
   @spec report(robot :: ToyRobot.t() | nil) :: ToyRobot.t() | nil
   def report(%ToyRobot{} = robot), do: robot
   def report(nil), do: nil
+
+  def move(%ToyRobot{direction: :north, y: y} = robot) when y < @table_size do
+    %{robot | y: y + 1}
+  end
+
+  def move(%ToyRobot{direction: :south, y: y} = robot) when y > 0 do
+    %{robot | y: y - 1}
+  end
+
+  def move(%ToyRobot{direction: :east, x: x} = robot) when x < @table_size do
+    %{robot | x: x + 1}
+  end
+
+  def move(%ToyRobot{direction: :west, x: x} = robot) when x > 0 do
+    %{robot | x: x - 1}
+  end
+
+  def move(%ToyRobot{} = robot) do
+    robot
+  end
 end
