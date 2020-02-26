@@ -40,6 +40,16 @@ defmodule ToyRobot.HttpServer do
     json(conn, State.get())
   end
 
+  post "/right" do
+    do_if_placed(&ToyRobot.right/1)
+    json(conn, State.get())
+  end
+
+  post "/left" do
+    do_if_placed(&ToyRobot.left/1)
+    json(conn, State.get())
+  end
+
   match _ do
     send_resp(conn, 404, "Not found")
   end
@@ -48,5 +58,18 @@ defmodule ToyRobot.HttpServer do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, Jason.encode!(resp_body))
+  end
+
+  defp do_if_placed(func) do
+    State.get()
+    |> case do
+      nil ->
+        :noop
+
+      %ToyRobot{} = robot ->
+        robot
+        |> func.()
+        |> State.update()
+    end
   end
 end

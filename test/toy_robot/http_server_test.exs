@@ -36,7 +36,7 @@ defmodule ToyRobot.HttpServerTest do
   end
 
   describe "POST /move" do
-    test "movese the robot and returns the state" do
+    test "moves the robot and returns the state" do
       State.update(ToyRobot.place())
 
       conn =
@@ -45,6 +45,50 @@ defmodule ToyRobot.HttpServerTest do
         |> HttpServer.call(@opts)
 
       assert json_response(conn) == %{"x" => 0, "y" => 1, "direction" => "north"}
+    end
+  end
+
+  describe "POST /right" do
+    test "rotates the robot right and returns the state" do
+      State.update(ToyRobot.place())
+
+      conn =
+        :post
+        |> conn("/right", "")
+        |> HttpServer.call(@opts)
+
+      assert json_response(conn) == %{"x" => 0, "y" => 0, "direction" => "east"}
+    end
+
+    test "ignores the request if state has not been set" do
+      conn =
+        :post
+        |> conn("/right", "")
+        |> HttpServer.call(@opts)
+
+      assert json_response(conn) == nil
+    end
+  end
+
+  describe "POST /left" do
+    test "rotates the robot left and returns the state" do
+      State.update(ToyRobot.place())
+
+      conn =
+        :post
+        |> conn("/left", "")
+        |> HttpServer.call(@opts)
+
+      assert json_response(conn) == %{"x" => 0, "y" => 0, "direction" => "west"}
+    end
+
+    test "ignores the request if state has not been set" do
+      conn =
+        :post
+        |> conn("/left", "")
+        |> HttpServer.call(@opts)
+
+      assert json_response(conn) == nil
     end
   end
 
