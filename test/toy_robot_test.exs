@@ -6,8 +6,42 @@ defmodule ToyRobotTest do
       assert ToyRobot.place() == %ToyRobot{x: 0, y: 0, direction: :north}
     end
 
-    test "returns a ToyRobot with the correct values when called with args" do
-      assert ToyRobot.place(1, 2, :east) == %ToyRobot{x: 1, y: 2, direction: :east}
+    test "returns a ToyRobot with the correct values when called with valid values for x" do
+      Enum.each(0..4, fn x ->
+        assert ToyRobot.place(x, 2, :east) == %ToyRobot{x: x, y: 2, direction: :east}
+      end)
+    end
+
+    test "returns a ToyRobot with the correct values when called with valid values for y" do
+      Enum.each(0..4, fn y ->
+        assert ToyRobot.place(1, y, :east) == %ToyRobot{x: 1, y: y, direction: :east}
+      end)
+    end
+
+    test "returns the correct direction when called with a valid direction" do
+      Enum.each([:north, :east, :south, :west], fn direction ->
+        assert ToyRobot.place(1, 1, direction) == %ToyRobot{x: 1, y: 1, direction: direction}
+      end)
+    end
+
+    test "returns nil given an negative value for x" do
+      assert ToyRobot.place(-1, 0, :east) == nil
+    end
+
+    test "returns nil given an negative value for y" do
+      assert ToyRobot.place(1, -5, :east) == nil
+    end
+
+    test "returns nil when x is greater than the table size" do
+      assert ToyRobot.place(5, 1, :east) == nil
+    end
+
+    test "returns nil when y is greater than the table size" do
+      assert ToyRobot.place(1, 5, :east) == nil
+    end
+
+    test "returns nil when given an invalid direction" do
+      assert ToyRobot.place(1, 1, :up) == nil
     end
   end
 

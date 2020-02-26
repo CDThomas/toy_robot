@@ -24,9 +24,17 @@ defmodule ToyRobot do
   @doc """
   Places the toy robot on the table in position x, y and with the direction :north, :south, :east, or :west.
   """
-  @spec place(x :: 0..4, y :: 0..4, direction :: direction()) :: t()
-  def place(x \\ 0, y \\ 0, direction \\ :north) do
+  @spec place(x :: 0..4, y :: 0..4, direction :: direction()) :: t() | nil
+  def place(x \\ 0, y \\ 0, direction \\ :north)
+
+  def place(x, y, direction)
+      when x in 0..@table_size and y in 0..@table_size and
+             direction in [:north, :east, :south, :west] do
     %__MODULE__{x: x, y: y, direction: direction}
+  end
+
+  def place(_, _, _) do
+    nil
   end
 
   @doc """

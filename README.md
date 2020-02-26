@@ -27,6 +27,8 @@ REPORT
 MOVE
 ```
 
+Note that the max value for `X` and `Y` is 4 and the minimum value is `0`. Commands that place the robot outside of these bounds are ignored.
+
 To exit the REPL, hit ctrl + D.
 
 Commands are also accepted via STDIN:
