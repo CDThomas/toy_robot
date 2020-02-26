@@ -3,10 +3,11 @@ defmodule Mix.Tasks.Repl do
   alias ToyRobot.Runner
 
   def run(_) do
+    {:ok, _} = Application.ensure_all_started(:toy_robot)
     read()
   end
 
-  def read(state \\ nil) do
+  def read() do
     case IO.read(:stdio, :line) do
       :eof ->
         :ok
@@ -15,37 +16,32 @@ defmodule Mix.Tasks.Repl do
         IO.puts("Error: #{message}")
 
       line ->
-        state =
-          case Parser.parse(line) do
-            {:ok, command} ->
-              Runner.run(command, state)
+        case Parser.parse(line) do
+          {:ok, command} ->
+            command
+            |> Runner.run()
+            |> maybe_print()
 
-            {:error, error} ->
-              IO.inspect(error, label: "Error")
-              state
-          end
+          {:error, error} ->
+            IO.inspect(error, label: "Error")
+        end
 
-        maybe_print(state)
-        read(state)
+        read()
     end
-  end
-
-  defp maybe_print(%ToyRobot{} = state) do
-    state
-    |> format()
-    |> IO.puts()
   end
 
   defp maybe_print(nil) do
     :noop
   end
 
-  defp format(%ToyRobot{x: x, y: y, direction: direction}) do
-    formatted_direction =
-      direction
-      |> Atom.to_string()
-      |> String.upcase()
+  defp maybe_print(resp) do
+    resp
+    |> format()
+    |> IO.puts()
+  end
 
+  defp format(%{"x" => x, "y" => y, "direction" => direction}) do
+    formatted_direction = String.upcase(direction)
     "(#{x}, #{y}, #{formatted_direction})"
   end
 end

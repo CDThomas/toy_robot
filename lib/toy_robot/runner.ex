@@ -1,4 +1,6 @@
 defmodule ToyRobot.Runner do
+  alias ToyRobot.Request
+
   @type place_command ::
           {:place, ToyRobot.coordinate(), ToyRobot.coordinate(), ToyRobot.direction()}
   @type command :: place_command() | :report | :move | :right | :left
@@ -6,28 +8,24 @@ defmodule ToyRobot.Runner do
   @doc """
   Takes an internal representation of a command from ToyRobot.Parser.parse/1 and runs the corresponding command with the current state.
   """
-  @spec run(command :: command(), state :: ToyRobot.t() | nil) :: ToyRobot.t() | nil
-  def run({:place, x, y, direction}, _) do
-    ToyRobot.place(x, y, direction)
+  @spec run(command :: command()) :: ToyRobot.t() | nil
+  def run({:place, x, y, direction}) do
+    Request.post("/place", %{x: x, y: y, direction: direction})
   end
 
-  def run(_, nil) do
-    nil
+  def run(:report) do
+    Request.get("/report")
   end
 
-  def run(:report, state) do
-    ToyRobot.report(state)
+  def run(:move) do
+    Request.post("/move")
   end
 
-  def run(:move, state) do
-    ToyRobot.move(state)
+  def run(:right) do
+    Request.post("/right")
   end
 
-  def run(:right, state) do
-    ToyRobot.right(state)
-  end
-
-  def run(:left, state) do
-    ToyRobot.left(state)
+  def run(:left) do
+    Request.post("/left")
   end
 end

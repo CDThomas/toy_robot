@@ -4,6 +4,13 @@ defmodule Mix.Tasks.ReplTest do
   import ExUnit.CaptureIO
 
   alias Mix.Tasks.Repl
+  alias ToyRobot.State
+
+  setup do
+    on_exit(fn ->
+      State.update(nil)
+    end)
+  end
 
   test "Prints the correct output given a place command" do
     assert capture_io("PLACE 0,0,SOUTH\n", fn ->

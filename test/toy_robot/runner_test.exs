@@ -1,40 +1,43 @@
 defmodule ToyRobot.RunnerTest do
   use ExUnit.Case
 
+  import Mock
+
+  alias ToyRobot.Request
   alias ToyRobot.Runner
 
-  test "runs place commands" do
-    command = {:place, 0, 0, :south}
-    assert Runner.run(command, nil) == %ToyRobot{x: 0, y: 0, direction: :south}
+  test "makes a POST request to /place given a place command" do
+    with_mock Request, post: fn _, _ -> :ok end do
+      Runner.run({:place, 0, 0, :south})
+      assert_called(Request.post("/place", %{x: 0, y: 0, direction: :south}))
+    end
   end
 
-  test "runs report commands" do
-    state = %ToyRobot{x: 0, y: 0, direction: :north}
-    assert Runner.run(:report, state) == state
+  test "makes a request to GET /report given a report command" do
+    with_mock Request, get: fn _ -> :ok end do
+      Runner.run(:report)
+      assert_called(Request.get("/report"))
+    end
   end
 
-  test "runs report command given nil state" do
-    assert Runner.run(:report, nil) == nil
+  test "makes a request to POST /move given a move command" do
+    with_mock Request, post: fn _ -> :ok end do
+      Runner.run(:move)
+      assert_called(Request.post("/move"))
+    end
   end
 
-  test "runs move commands" do
-    initial_state = %ToyRobot{x: 0, y: 0, direction: :north}
-    expected_state = %ToyRobot{x: 0, y: 1, direction: :north}
-
-    assert Runner.run(:move, initial_state) == expected_state
+  test "makes a request to POST /right given a right command" do
+    with_mock Request, post: fn _ -> :ok end do
+      Runner.run(:right)
+      assert_called(Request.post("/right"))
+    end
   end
 
-  test "runs right commands" do
-    initial_state = %ToyRobot{x: 0, y: 0, direction: :north}
-    expected_state = %ToyRobot{x: 0, y: 0, direction: :east}
-
-    assert Runner.run(:right, initial_state) == expected_state
-  end
-
-  test "runs left commands" do
-    initial_state = %ToyRobot{x: 0, y: 0, direction: :north}
-    expected_state = %ToyRobot{x: 0, y: 0, direction: :west}
-
-    assert Runner.run(:left, initial_state) == expected_state
+  test "makes a request to POST /left given a left command" do
+    with_mock Request, post: fn _ -> :ok end do
+      Runner.run(:left)
+      assert_called(Request.post("/left"))
+    end
   end
 end
