@@ -9,7 +9,7 @@ defmodule ToyRobot.State do
     Agent.get(__MODULE__, & &1)
   end
 
-  def update do
-    Agent.update(__MODULE__, & &1)
+  def update(robot) do
+    Agent.update(__MODULE__, fn _ -> robot end)
   end
 end

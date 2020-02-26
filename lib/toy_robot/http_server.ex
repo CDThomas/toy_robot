@@ -23,6 +23,15 @@ defmodule ToyRobot.HttpServer do
     json(conn, State.get())
   end
 
+  post "/place" do
+    # TODO: validate params
+    %{"x" => x, "y" => y, "direction" => direction} = conn.body_params
+
+    State.update(ToyRobot.place(x, y, direction))
+
+    json(conn, State.get())
+  end
+
   match _ do
     send_resp(conn, 404, "Not found")
   end
