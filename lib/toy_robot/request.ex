@@ -1,4 +1,18 @@
 defmodule ToyRobot.Request do
+  @type return_value :: {:ok, map() | nil} | {:error, HTTPoison.Error.t() | Jason.DecodeError.t()}
+
+  @moduledoc """
+  Functions for making requests to the ToyRobot HTTP server.
+  """
+
+  @doc """
+  Makes a GET request to the ToyRobot HTTP server.
+
+  Returns the JSON decoded response body.
+
+  Returns an error in the request fails.
+  """
+  @spec get(endpoint :: binary()) :: return_value()
   def get(endpoint) do
     path = Path.join(api_base_url(), endpoint)
 
@@ -9,6 +23,14 @@ defmodule ToyRobot.Request do
     end
   end
 
+  @doc """
+  Makes a POST request to the ToyRobot HTTP server.
+
+  Returns the JSON decoded response body.
+
+  Returns an error in the request fails.
+  """
+  @spec post(endpoint :: binary(), data :: map() | nil) :: return_value()
   def post(endpoint, data \\ nil) do
     path = Path.join(api_base_url(), endpoint)
 

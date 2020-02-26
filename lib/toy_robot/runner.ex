@@ -8,7 +8,7 @@ defmodule ToyRobot.Runner do
   @doc """
   Takes an internal representation of a command from ToyRobot.Parser.parse/1 and runs the corresponding command with the current state.
   """
-  @spec run(command :: command()) :: ToyRobot.t() | nil
+  @spec run(command :: command()) :: Request.return_value()
   def run({:place, x, y, direction}) do
     Request.post("/place", %{x: x, y: y, direction: direction})
   end

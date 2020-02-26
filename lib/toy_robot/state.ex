@@ -1,4 +1,8 @@
 defmodule ToyRobot.State do
+  @moduledoc """
+  A wrapper around an Agent for keeping track of ToyRobot state.
+  """
+
   use Agent
 
   def start_link(initial_value) do

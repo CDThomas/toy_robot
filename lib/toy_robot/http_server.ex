@@ -1,4 +1,10 @@
 defmodule ToyRobot.HttpServer do
+  @moduledoc """
+  HTTP Server responding to commands from the ToyRobot REPL.
+
+  Maintains game state via calls to ToyRobot.State.
+  """
+
   use Plug.Router
 
   import Plug.Conn
