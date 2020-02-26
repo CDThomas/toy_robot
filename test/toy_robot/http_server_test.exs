@@ -22,6 +22,17 @@ defmodule ToyRobot.HttpServerTest do
 
       assert json_response(conn) == nil
     end
+
+    test "returns the correct state when state is not empy" do
+      State.update(ToyRobot.place())
+
+      conn =
+        :get
+        |> conn("/report")
+        |> HttpServer.call(@opts)
+
+      assert json_response(conn) == %{"x" => 0, "y" => 0, "direction" => "north"}
+    end
   end
 
   describe "POST /place" do
