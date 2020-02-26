@@ -1,6 +1,6 @@
 defmodule ToyRobot.HttpServer do
   @moduledoc """
-  HTTP Server responding to commands from the ToyRobot REPL.
+  HTTP Server for responding to commands from the ToyRobot REPL.
 
   Maintains game state via calls to ToyRobot.State.
   """
