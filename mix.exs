@@ -14,7 +14,8 @@ defmodule ToyRobot.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {ToyRobot.Application, []}
     ]
   end
 
@@ -22,7 +23,9 @@ defmodule ToyRobot.MixProject do
   defp deps do
     [
       {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false},
-      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
+      {:jason, "~> 1.1"},
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
+      {:plug_cowboy, "~> 2.0"}
     ]
   end
 end
