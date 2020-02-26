@@ -36,6 +36,7 @@ defmodule ToyRobot.HttpServer do
   post "/place" do
     if valid?(conn.body_params) do
       %{"x" => x, "y" => y, "direction" => direction} = conn.body_params
+      # N.B. the direction is validated by valid?/1, so the call to String.to_atom/1 is safe here.
       robot = ToyRobot.place(x, y, String.to_atom(direction))
       state = State.get_and_update(robot)
 

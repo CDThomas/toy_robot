@@ -70,6 +70,7 @@ defmodule ToyRobot.Parser do
   end
 
   defp parse_direction(direction) when direction in ["NORTH", "EAST", "SOUTH", "WEST"] do
+    # N.B. the direction is validated by the guard clause above, so the call to String.to_atom/1 is safe here.
     parsed_direction =
       direction
       |> String.downcase()
