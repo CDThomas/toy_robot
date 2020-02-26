@@ -32,6 +32,14 @@ defmodule ToyRobot.HttpServer do
     json(conn, State.get())
   end
 
+  post "/move" do
+    State.get()
+    |> ToyRobot.move()
+    |> State.update()
+
+    json(conn, State.get())
+  end
+
   match _ do
     send_resp(conn, 404, "Not found")
   end
