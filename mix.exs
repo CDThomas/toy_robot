@@ -23,8 +23,10 @@ defmodule ToyRobot.MixProject do
   defp deps do
     [
       {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false},
+      {:httpoison, "~> 1.6"},
       {:jason, "~> 1.1"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
+      {:mock, "~> 0.3.0", only: :test},
       {:plug_cowboy, "~> 2.0"}
     ]
   end
