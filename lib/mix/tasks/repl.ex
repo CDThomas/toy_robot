@@ -4,10 +4,10 @@ defmodule Mix.Tasks.Repl do
 
   def run(_) do
     {:ok, _} = Application.ensure_all_started(:httpoison)
-    read()
+    do_run()
   end
 
-  def read() do
+  def do_run() do
     case IO.read(:stdio, :line) do
       :eof ->
         :ok
@@ -23,7 +23,7 @@ defmodule Mix.Tasks.Repl do
           error -> IO.inspect(error, label: "Error")
         end
 
-        read()
+        do_run()
     end
   end
 
