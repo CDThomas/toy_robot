@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Repl do
   alias ToyRobot.Runner
 
   def run(_) do
-    {:ok, _} = Application.ensure_all_started(:toy_robot)
+    {:ok, _} = Application.ensure_all_started(:httpoison)
     read()
   end
 
