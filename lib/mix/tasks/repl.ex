@@ -16,14 +16,11 @@ defmodule Mix.Tasks.Repl do
         IO.puts("Error: #{message}")
 
       line ->
-        case Parser.parse(line) do
-          {:ok, command} ->
-            command
-            |> Runner.run()
-            |> maybe_print()
-
-          {:error, error} ->
-            IO.inspect(error, label: "Error")
+        with {:ok, command} <- Parser.parse(line),
+             {:ok, state} <- Runner.run(command) do
+          maybe_print(state)
+        else
+          error -> IO.inspect(error, label: "Error")
         end
 
         read()
@@ -34,8 +31,8 @@ defmodule Mix.Tasks.Repl do
     :noop
   end
 
-  defp maybe_print(resp) do
-    resp
+  defp maybe_print(state) do
+    state
     |> format()
     |> IO.puts()
   end

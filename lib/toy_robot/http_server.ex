@@ -28,12 +28,15 @@ defmodule ToyRobot.HttpServer do
   end
 
   post "/place" do
-    # TODO: validate params
-    %{"x" => x, "y" => y, "direction" => direction} = conn.body_params
-    robot = ToyRobot.place(x, y, String.to_atom(direction))
-    state = State.get_and_update(robot)
+    if valid?(conn.body_params) do
+      %{"x" => x, "y" => y, "direction" => direction} = conn.body_params
+      robot = ToyRobot.place(x, y, String.to_atom(direction))
+      state = State.get_and_update(robot)
 
-    json(conn, state)
+      json(conn, state)
+    else
+      send_resp(conn, 400, "Bad Request")
+    end
   end
 
   post "/move" do
@@ -72,5 +75,10 @@ defmodule ToyRobot.HttpServer do
         |> func.()
         |> State.get_and_update()
     end
+  end
+
+  defp valid?(params) do
+    is_integer(params["x"]) and is_integer(params["y"]) and
+      params["direction"] in ["north", "east", "south", "west"]
   end
 end

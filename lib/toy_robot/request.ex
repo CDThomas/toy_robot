@@ -1,27 +1,30 @@
 defmodule ToyRobot.Request do
   def get(endpoint) do
-    api_base_url()
-    |> Path.join(endpoint)
-    |> HTTPoison.get!()
-    |> Map.get(:body)
-    |> Jason.decode!()
+    path = Path.join(api_base_url(), endpoint)
+
+    with {:ok, resp} <- HTTPoison.get(path),
+         body = Map.get(resp, :body),
+         {:ok, data} <- Jason.decode(body) do
+      {:ok, data}
+    end
   end
 
   def post(endpoint, data \\ nil) do
+    path = Path.join(api_base_url(), endpoint)
+
     body =
       case data do
         nil -> ""
         %{} -> Jason.encode!(data)
       end
 
-    api_base_url()
-    |> Path.join(endpoint)
-    |> HTTPoison.post!(
-      body,
-      [{"content-type", "application/json"}]
-    )
-    |> Map.get(:body)
-    |> Jason.decode!()
+    opts = [{"content-type", "application/json"}]
+
+    with {:ok, resp} <- HTTPoison.post(path, body, opts),
+         body = Map.get(resp, :body),
+         {:ok, data} <- Jason.decode(body) do
+      {:ok, data}
+    end
   end
 
   defp api_base_url() do
