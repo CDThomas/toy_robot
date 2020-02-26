@@ -39,7 +39,7 @@ defmodule ToyRobot.HttpServerTest do
     test "places the robot and returns the state" do
       conn =
         :post
-        |> conn("/place", %{x: 0, y: 0, direction: :north})
+        |> conn("/place", %{x: 0, y: 0, direction: "north"})
         |> HttpServer.call(@opts)
 
       assert json_response(conn) == %{"x" => 0, "y" => 0, "direction" => "north"}

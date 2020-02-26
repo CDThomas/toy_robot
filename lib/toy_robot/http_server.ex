@@ -30,7 +30,7 @@ defmodule ToyRobot.HttpServer do
   post "/place" do
     # TODO: validate params
     %{"x" => x, "y" => y, "direction" => direction} = conn.body_params
-    robot = ToyRobot.place(x, y, String.to_existing_atom(direction))
+    robot = ToyRobot.place(x, y, String.to_atom(direction))
     state = State.get_and_update(robot)
 
     json(conn, state)
