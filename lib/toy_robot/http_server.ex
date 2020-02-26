@@ -33,10 +33,7 @@ defmodule ToyRobot.HttpServer do
   end
 
   post "/move" do
-    State.get()
-    |> ToyRobot.move()
-    |> State.update()
-
+    do_if_placed(&ToyRobot.move/1)
     json(conn, State.get())
   end
 

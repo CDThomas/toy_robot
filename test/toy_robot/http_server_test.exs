@@ -46,6 +46,15 @@ defmodule ToyRobot.HttpServerTest do
 
       assert json_response(conn) == %{"x" => 0, "y" => 1, "direction" => "north"}
     end
+
+    test "ignores the request if state has not been set" do
+      conn =
+        :post
+        |> conn("/move", "")
+        |> HttpServer.call(@opts)
+
+      assert json_response(conn) == nil
+    end
   end
 
   describe "POST /right" do
